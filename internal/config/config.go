@@ -8,6 +8,8 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+
+	"github.com/mahmoud/igpostercli/internal/secrets"
 )
 
 const (
@@ -89,6 +91,48 @@ func Load() (*Config, error) {
 			return nil, fmt.Errorf("invalid %s: %w", envPollTimeout, err)
 		}
 		cfg.PollTimeout = timeout
+	}
+
+	return cfg, nil
+}
+
+func LoadWithProfile(profile string) (*Config, error) {
+	cfg, err := Load()
+	if err != nil {
+		return nil, err
+	}
+
+	name, err := NormalizeProfileNameOrDefault(profile)
+	if err != nil {
+		return nil, err
+	}
+
+	profiles, err := ReadProfiles()
+	if err != nil {
+		return nil, err
+	}
+
+	if p, ok := profiles.Profiles[name]; ok {
+		if p.IGUserID != "" {
+			cfg.IGUserID = p.IGUserID
+		}
+
+		if p.PageID != "" {
+			cfg.PageID = p.PageID
+		}
+
+		if p.BusinessID != "" {
+			cfg.BusinessID = p.BusinessID
+		}
+	}
+
+	token, ok, err := secrets.GetAccessToken(name)
+	if err != nil {
+		return nil, fmt.Errorf("load access token: %w", err)
+	}
+
+	if ok {
+		cfg.AccessToken = token
 	}
 
 	return cfg, nil

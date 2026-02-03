@@ -18,8 +18,8 @@ type ExchangeCmd struct {
 	ShortToken string `help:"Short-lived user token" required:""`
 }
 
-func (c *ExchangeCmd) Run() error {
-	cfg, err := config.Load()
+func (c *ExchangeCmd) Run(root *RootFlags) error {
+	cfg, err := config.LoadWithProfile(root.Profile)
 	if err != nil {
 		return err
 	}
@@ -46,8 +46,8 @@ type DebugCmd struct {
 	Token string `help:"Token to debug (defaults to IG_ACCESS_TOKEN)"`
 }
 
-func (c *DebugCmd) Run() error {
-	cfg, err := config.Load()
+func (c *DebugCmd) Run(root *RootFlags) error {
+	cfg, err := config.LoadWithProfile(root.Profile)
 	if err != nil {
 		return err
 	}

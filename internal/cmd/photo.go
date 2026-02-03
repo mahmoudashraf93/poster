@@ -24,7 +24,7 @@ func (c *PhotoCmd) Run(root *RootFlags) error {
 		return usage("provide only one of --file or --url")
 	}
 
-	cfg, err := config.Load()
+	cfg, err := config.LoadWithProfile(root.Profile)
 	if err != nil {
 		return err
 	}

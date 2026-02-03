@@ -21,7 +21,7 @@ func (c *CarouselCmd) Run(root *RootFlags) error {
 		return usage("provide at least one --files entry")
 	}
 
-	cfg, err := config.Load()
+	cfg, err := config.LoadWithProfile(root.Profile)
 	if err != nil {
 		return err
 	}

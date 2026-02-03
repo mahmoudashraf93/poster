@@ -29,6 +29,7 @@ make build
 
 Global flags:
 
+- `--profile`: Profile name (selects stored config + keychain token).
 - `--user-id`: Override `IG_USER_ID` at runtime.
 - `--page-id`: Override `IG_PAGE_ID` at runtime.
 - `--business-id`: Override `IG_BUSINESS_ID` at runtime.
@@ -86,6 +87,17 @@ igpost account
 igpost owned-pages --business-id <BUSINESS_ID>
 ```
 
+### Profile management (keychain-backed)
+
+Profiles store non-secret values in `~/.config/igpostercli/config.json`, while access tokens are stored in the OS keychain.
+
+```bash
+igpost profile set brand-a --access-token "<token>" --user-id <IG_USER_ID> --page-id <PAGE_ID> --business-id <BUSINESS_ID>
+igpost profile show brand-a
+igpost profile list
+igpost profile delete brand-a
+```
+
 ## Environment variables
 
 Set these in `.env` (see `.env.example`) or export them in your shell.
@@ -93,6 +105,7 @@ Set these in `.env` (see `.env.example`) or export them in your shell.
 - `IG_APP_ID`: Meta app ID.
 - `IG_APP_SECRET`: Meta app secret.
 - `IG_ACCESS_TOKEN`: Long-lived Instagram User access token.
+- `IG_PROFILE`: Profile name (default: `default`).
 - `IG_PAGE_ID`: Facebook Page ID connected to your Instagram account.
 - `IG_BUSINESS_ID`: Meta Business ID (for listing owned pages).
 - `IG_USER_ID`: Instagram Business/User ID.

@@ -8,11 +8,13 @@ import (
 
 	"github.com/alecthomas/kong"
 
+	"github.com/mahmoud/igpostercli/internal/config"
 	"github.com/mahmoud/igpostercli/internal/errfmt"
 )
 
 type RootFlags struct {
 	Verbose    bool   `help:"Verbose logging" short:"v"`
+	Profile    string `help:"Profile name (selects stored config + keychain token)" default:"${profile}"`
 	UserID     string `help:"Instagram user ID (overrides IG_USER_ID)"`
 	PageID     string `help:"Facebook Page ID (overrides IG_PAGE_ID)"`
 	BusinessID string `help:"Business ID (overrides IG_BUSINESS_ID)"`
@@ -28,6 +30,7 @@ type CLI struct {
 	Token    TokenCmd         `cmd:"" help:"Token management"`
 	Account  AccountCmd       `cmd:"" help:"Account utilities"`
 	Owned    OwnedPagesCmd    `cmd:"" name:"owned-pages" help:"List pages owned by a business"`
+	Profile  ProfileCmd       `cmd:"" help:"Profile management"`
 }
 
 type exitPanic struct{ code int }
@@ -96,11 +99,15 @@ func wrapParseError(err error) error {
 
 func newParser() (*kong.Kong, *CLI, error) {
 	cli := &CLI{}
+	vars := kong.Vars{
+		"version": VersionString(),
+		"profile": envOr("IG_PROFILE", config.DefaultProfileName),
+	}
 	parser, err := kong.New(
 		cli,
 		kong.Name("igpost"),
 		kong.Description("Instagram Graph API posting CLI"),
-		kong.Vars{"version": VersionString()},
+		kong.Vars(vars),
 		kong.Writers(os.Stdout, os.Stderr),
 		kong.Exit(func(code int) { panic(exitPanic{code: code}) }),
 	)
@@ -108,4 +115,11 @@ func newParser() (*kong.Kong, *CLI, error) {
 		return nil, nil, err
 	}
 	return parser, cli, nil
+}
+
+func envOr(key, fallback string) string {
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return fallback
 }

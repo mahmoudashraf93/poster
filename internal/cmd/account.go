@@ -12,7 +12,7 @@ import (
 type AccountCmd struct{}
 
 func (c *AccountCmd) Run(root *RootFlags) error {
-	cfg, err := config.Load()
+	cfg, err := config.LoadWithProfile(root.Profile)
 	if err != nil {
 		return err
 	}
