@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mahmoud/igpostercli/internal/config"
-	"github.com/mahmoud/igpostercli/internal/graph"
-	"github.com/mahmoud/igpostercli/internal/upload"
+	"github.com/mahmoudashraf93/poster/internal/config"
+	"github.com/mahmoudashraf93/poster/internal/graph"
+	"github.com/mahmoudashraf93/poster/internal/upload"
 )
 
 type PhotoCmd struct {

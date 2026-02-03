@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	serviceName = "igpostercli"
+	serviceName = "poster"
 )
 
 var (
@@ -52,7 +52,7 @@ func SetAccessToken(profile string, token string) error {
 	item := keyring.Item{
 		Key:   tokenKey(profile),
 		Data:  []byte(token),
-		Label: "igpostercli access token",
+		Label: "poster access token",
 	}
 
 	if err := kr.Set(item); err != nil {

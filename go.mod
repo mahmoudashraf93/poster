@@ -1,4 +1,4 @@
-module github.com/mahmoud/igpostercli
+module github.com/mahmoudashraf93/poster
 
 go 1.25
 

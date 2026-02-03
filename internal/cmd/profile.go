@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mahmoud/igpostercli/internal/config"
-	"github.com/mahmoud/igpostercli/internal/secrets"
+	"github.com/mahmoudashraf93/poster/internal/config"
+	"github.com/mahmoudashraf93/poster/internal/secrets"
 )
 
 type ProfileCmd struct {
@@ -19,9 +19,9 @@ type ProfileCmd struct {
 type ProfileSetCmd struct {
 	Name        string  `arg:"" optional:"" help:"Profile name (defaults to current)"`
 	AccessToken *string `help:"Access token (stored in keychain)"`
-	UserID      *string `help:"Instagram user ID"`
-	PageID      *string `help:"Facebook Page ID"`
-	BusinessID  *string `help:"Business ID"`
+	UserID      *string `name:"profile-user-id" help:"Instagram user ID"`
+	PageID      *string `name:"profile-page-id" help:"Facebook Page ID"`
+	BusinessID  *string `name:"profile-business-id" help:"Business ID"`
 }
 
 func (c *ProfileSetCmd) Run(root *RootFlags) error {
@@ -48,21 +48,21 @@ func (c *ProfileSetCmd) Run(root *RootFlags) error {
 
 	if c.UserID != nil {
 		if *c.UserID == "" {
-			return usage("--user-id cannot be empty")
+			return usage("--profile-user-id cannot be empty")
 		}
 		profile.IGUserID = *c.UserID
 	}
 
 	if c.PageID != nil {
 		if *c.PageID == "" {
-			return usage("--page-id cannot be empty")
+			return usage("--profile-page-id cannot be empty")
 		}
 		profile.PageID = *c.PageID
 	}
 
 	if c.BusinessID != nil {
 		if *c.BusinessID == "" {
-			return usage("--business-id cannot be empty")
+			return usage("--profile-business-id cannot be empty")
 		}
 		profile.BusinessID = *c.BusinessID
 	}

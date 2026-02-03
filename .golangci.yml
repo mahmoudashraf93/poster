@@ -83,7 +83,7 @@ linters:
           json: snake
           yaml: snake
         overrides:
-          - pkg: github.com/mahmoud/igpostercli/internal/cmd
+          - pkg: github.com/mahmoudashraf93/poster/internal/cmd
             ignore: true
     wsl_v5:
       allow-first-in-block: true
@@ -138,4 +138,4 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/mahmoud/igpostercli
+        - github.com/mahmoudashraf93/poster

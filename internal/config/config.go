@@ -9,7 +9,7 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/mahmoud/igpostercli/internal/secrets"
+	"github.com/mahmoudashraf93/poster/internal/secrets"
 )
 
 const (

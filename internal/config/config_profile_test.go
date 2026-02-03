@@ -5,7 +5,7 @@ import (
 
 	"github.com/99designs/keyring"
 
-	"github.com/mahmoud/igpostercli/internal/secrets"
+	"github.com/mahmoudashraf93/poster/internal/secrets"
 )
 
 func withTestKeyring(t *testing.T) func() {
@@ -15,7 +15,7 @@ func withTestKeyring(t *testing.T) func() {
 
 	return secrets.SetOpenKeyringForTests(func() (keyring.Keyring, error) {
 		return keyring.Open(keyring.Config{
-			ServiceName:      "igpostercli-test",
+			ServiceName:      "poster-test",
 			AllowedBackends:  []keyring.BackendType{keyring.FileBackend},
 			FileDir:          dir,
 			FilePasswordFunc: func(string) (string, error) { return "test-pass", nil },

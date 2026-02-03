@@ -1,19 +1,19 @@
 version: 2
 
-project_name: igpostercli
+project_name: poster
 
 changelog:
   disable: true
 
 builds:
-  - id: igpost
-    main: ./cmd/igpost
-    binary: igpost
+  - id: poster
+    main: ./cmd/poster
+    binary: poster
     ldflags: >-
       -s -w
-      -X github.com/mahmoud/igpostercli/internal/cmd.version={{ .Tag }}
-      -X github.com/mahmoud/igpostercli/internal/cmd.commit={{ .ShortCommit }}
-      -X github.com/mahmoud/igpostercli/internal/cmd.date={{ .Date }}
+      -X github.com/mahmoudashraf93/poster/internal/cmd.version={{ .Tag }}
+      -X github.com/mahmoudashraf93/poster/internal/cmd.commit={{ .ShortCommit }}
+      -X github.com/mahmoudashraf93/poster/internal/cmd.date={{ .Date }}
     env:
       - CGO_ENABLED=0
     targets:
@@ -26,7 +26,7 @@ builds:
 
 archives:
   - builds:
-      - igpost
+      - poster
     format: tar.gz
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:

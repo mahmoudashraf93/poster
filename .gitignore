@@ -36,7 +36,7 @@ go.work.sum
 
 # Local build output
 bin/
-/igpost
+/poster
 
 # Node (optional dev scripts)
 node_modules/

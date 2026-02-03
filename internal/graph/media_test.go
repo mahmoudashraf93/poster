@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mahmoud/igpostercli/internal/config"
+	"github.com/mahmoudashraf93/poster/internal/config"
 )
 
 func TestCreatePhotoContainer(t *testing.T) {

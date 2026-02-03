@@ -8,8 +8,8 @@ import (
 
 	"github.com/alecthomas/kong"
 
-	"github.com/mahmoud/igpostercli/internal/config"
-	"github.com/mahmoud/igpostercli/internal/errfmt"
+	"github.com/mahmoudashraf93/poster/internal/config"
+	"github.com/mahmoudashraf93/poster/internal/errfmt"
 )
 
 type RootFlags struct {
@@ -105,7 +105,7 @@ func newParser() (*kong.Kong, *CLI, error) {
 	}
 	parser, err := kong.New(
 		cli,
-		kong.Name("igpost"),
+		kong.Name("poster"),
 		kong.Description("Instagram Graph API posting CLI"),
 		kong.Vars(vars),
 		kong.Writers(os.Stdout, os.Stderr),

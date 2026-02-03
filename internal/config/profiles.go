@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	AppName            = "igpostercli"
+	AppName            = "poster"
 	DefaultProfileName = "default"
 	profilesConfigFile = "config.json"
 )

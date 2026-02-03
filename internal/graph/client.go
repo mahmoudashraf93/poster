@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/mahmoud/igpostercli/internal/config"
+	"github.com/mahmoudashraf93/poster/internal/config"
 )
 
 type JSON map[string]any

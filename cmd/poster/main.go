@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/mahmoud/igpostercli/internal/cmd"
+	"github.com/mahmoudashraf93/poster/internal/cmd"
 )
 
 func main() {

@@ -14,7 +14,7 @@ func withTestKeyring(t *testing.T) func() {
 
 	return SetOpenKeyringForTests(func() (keyring.Keyring, error) {
 		return keyring.Open(keyring.Config{
-			ServiceName:      "igpostercli-test",
+			ServiceName:      "poster-test",
 			AllowedBackends:  []keyring.BackendType{keyring.FileBackend},
 			FileDir:          dir,
 			FilePasswordFunc: func(string) (string, error) { return "test-pass", nil },

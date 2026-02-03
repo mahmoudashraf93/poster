@@ -1,20 +1,20 @@
-# igpost
+# poster
 
-igpost is a Go CLI for posting photos, reels, and carousels to Instagram using the official Graph API. It uploads local media to https://uguu.se for temporary hosting, then publishes via the Instagram Graph API.
+poster is a Go CLI for posting photos, reels, and carousels to Instagram using the official Graph API. It uploads local media to https://uguu.se for temporary hosting, then publishes via the Instagram Graph API.
 
 ## Installation
 
 ### Go install
 
 ```bash
-go install github.com/mahmoud/igpostercli/cmd/igpost@latest
+go install github.com/mahmoudashraf93/poster/cmd/poster@latest
 ```
 
 ### Build from source
 
 ```bash
 make build
-./bin/igpost --help
+./bin/poster --help
 ```
 
 ## Setup (Meta + Instagram)
@@ -22,8 +22,8 @@ make build
 1. Create a Meta app in the Meta Developers dashboard and add the **Instagram Graph API** product.
 2. Link a Facebook Page to your Instagram Business/Creator account.
 3. Generate a short-lived user token with the required permissions (typically: `instagram_basic`, `instagram_content_publish`, `pages_show_list`).
-4. Exchange the short-lived token for a long-lived token using `igpost token exchange`.
-5. Use `igpost account` to fetch your Instagram Business/User ID.
+4. Exchange the short-lived token for a long-lived token using `poster token exchange`.
+5. Use `poster account` to fetch your Instagram Business/User ID.
 
 ## Usage
 
@@ -37,7 +37,7 @@ Global flags:
 Do you need BOTH `IG_USER_ID` and `IG_PAGE_ID` to post?
 
 - For posting, you only need `IG_USER_ID` + `IG_ACCESS_TOKEN`.
-- `IG_PAGE_ID` is only needed to lookup the IG user ID (via `igpost account`).
+- `IG_PAGE_ID` is only needed to lookup the IG user ID (via `poster account`).
 
 So the typical flow is:
 
@@ -45,7 +45,7 @@ So the typical flow is:
 2. Run:
 
 ```bash
-igpost --page-id <PAGE_ID> account
+poster --page-id <PAGE_ID> account
 ```
 
 3. It prints `IG_USER_ID=...`
@@ -54,42 +54,42 @@ igpost --page-id <PAGE_ID> account
 ### Post a photo
 
 ```bash
-igpost photo --file path/to/photo.jpg --caption "hello"
+poster photo --file path/to/photo.jpg --caption "hello"
 ```
 
 ```bash
-igpost photo --url https://example.com/photo.jpg --caption "hello"
+poster photo --url https://example.com/photo.jpg --caption "hello"
 ```
 
 ### Post a reel
 
 ```bash
-igpost reel --file path/to/video.mp4 --caption "hello"
+poster reel --file path/to/video.mp4 --caption "hello"
 ```
 
 ### Post a carousel
 
 ```bash
-igpost carousel --files img1.jpg img2.jpg --caption "hello"
+poster carousel --files img1.jpg img2.jpg --caption "hello"
 ```
 
 ### Token utilities
 
 ```bash
-igpost token exchange --short-token "<short_token>"
-igpost token debug
+poster token exchange --short-token "<short_token>"
+poster token debug
 ```
 
 ### Account utilities
 
 ```bash
-igpost account
-igpost owned-pages --business-id <BUSINESS_ID>
+poster account
+poster owned-pages --business-id <BUSINESS_ID>
 ```
 
 ### Profile management (keychain-backed)
 
-Profiles store non-secret values in `~/.config/igpostercli/config.json`, while access tokens are stored in the OS keychain.
+Profiles store non-secret values in `~/.config/poster/config.json`, while access tokens are stored in the OS keychain.
 
 Resolution order:
 
@@ -98,10 +98,10 @@ Resolution order:
 3. Environment variables / `.env`
 
 ```bash
-igpost profile set brand-a --access-token "<token>" --user-id <IG_USER_ID> --page-id <PAGE_ID> --business-id <BUSINESS_ID>
-igpost profile show brand-a
-igpost profile list
-igpost profile delete brand-a
+poster profile set brand-a --access-token "<token>" --user-id <IG_USER_ID> --page-id <PAGE_ID> --business-id <BUSINESS_ID>
+poster profile show brand-a
+poster profile list
+poster profile delete brand-a
 ```
 
 ## Environment variables
@@ -127,7 +127,7 @@ Long-lived tokens expire. When yours is near expiry:
 2. Run:
 
 ```bash
-igpost token exchange --short-token "<short_token>"
+poster token exchange --short-token "<short_token>"
 ```
 
 3. Update `IG_ACCESS_TOKEN` with the new value.
