@@ -31,6 +31,7 @@ type CLI struct {
 	Account  AccountCmd       `cmd:"" help:"Account utilities"`
 	Owned    OwnedPagesCmd    `cmd:"" name:"owned-pages" help:"List pages owned by a business"`
 	Profile  ProfileCmd       `cmd:"" help:"Profile management"`
+	Keyring  KeyringCmd       `cmd:"" help:"Keyring backend configuration"`
 }
 
 type exitPanic struct{ code int }

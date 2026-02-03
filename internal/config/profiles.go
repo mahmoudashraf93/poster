@@ -26,7 +26,8 @@ type Profile struct {
 }
 
 type ProfilesFile struct {
-	Profiles map[string]Profile `json:"profiles,omitempty"`
+	KeyringBackend string             `json:"keyring_backend,omitempty"`
+	Profiles       map[string]Profile `json:"profiles,omitempty"`
 }
 
 func ConfigDir() (string, error) {

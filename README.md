@@ -29,7 +29,7 @@ make build
 
 Global flags:
 
-- `--profile`: Profile name (selects stored config + keychain token).
+- `--profile`: Profile name (selects stored config + keyring token).
 - `--user-id`: Override `IG_USER_ID` at runtime.
 - `--page-id`: Override `IG_PAGE_ID` at runtime.
 - `--business-id`: Override `IG_BUSINESS_ID` at runtime.
@@ -87,9 +87,9 @@ poster account
 poster owned-pages --business-id <BUSINESS_ID>
 ```
 
-### Profile management (keychain-backed)
+### Profile management (keyring-backed)
 
-Profiles store non-secret values in `~/.config/poster/config.json`, while access tokens are stored in the OS keychain.
+Profiles store non-secret values in `~/.config/poster/config.json`, while access tokens are stored in the OS keyring (Keychain, Secret Service, or encrypted file backend depending on configuration).
 
 Resolution order:
 
@@ -102,6 +102,40 @@ poster profile set brand-a --access-token "<token>" --user-id <IG_USER_ID> --pag
 poster profile show brand-a
 poster profile list
 poster profile delete brand-a
+```
+
+### Keyring backend (keychain vs encrypted file)
+
+Backends:
+
+- `auto` (default): picks the best backend for the platform.
+- `keychain`: macOS Keychain (recommended on macOS).
+- `file`: encrypted on-disk keyring (requires a password).
+
+Set backend (writes `keyring_backend` into `config.json`):
+
+```bash
+poster keyring file
+poster keyring keychain
+poster keyring auto
+```
+
+Show current backend + source:
+
+```bash
+poster keyring
+```
+
+Non-interactive runs (CI/ssh): file backend requires `POSTER_KEYRING_PASSWORD`.
+
+```bash
+export POSTER_KEYRING_PASSWORD='...'
+```
+
+Force backend via env (overrides config):
+
+```bash
+export POSTER_KEYRING_BACKEND=file
 ```
 
 ## Environment variables
@@ -118,6 +152,8 @@ Set these in `.env` (see `.env.example`) or export them in your shell.
 - `IG_GRAPH_VERSION`: Graph API version (default: `v19.0`).
 - `IG_POLL_INTERVAL`: Polling interval for media processing (default: `5s`).
 - `IG_POLL_TIMEOUT`: Polling timeout for media processing (default: `300s`).
+- `POSTER_KEYRING_BACKEND`: Keyring backend (`auto`, `keychain`, `file`). Overrides config.
+- `POSTER_KEYRING_PASSWORD`: Password for encrypted file backend (use in non-interactive runs).
 
 ## Token refresh
 
