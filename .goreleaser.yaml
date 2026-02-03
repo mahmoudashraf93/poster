@@ -1,0 +1,37 @@
+version: 2
+
+project_name: igpostercli
+
+changelog:
+  disable: true
+
+builds:
+  - id: igpost
+    main: ./cmd/igpost
+    binary: igpost
+    ldflags: >-
+      -s -w
+      -X github.com/mahmoud/igpostercli/internal/cmd.version={{ .Tag }}
+      -X github.com/mahmoud/igpostercli/internal/cmd.commit={{ .ShortCommit }}
+      -X github.com/mahmoud/igpostercli/internal/cmd.date={{ .Date }}
+    env:
+      - CGO_ENABLED=0
+    targets:
+      - linux_amd64
+      - linux_arm64
+      - darwin_amd64
+      - darwin_arm64
+      - windows_amd64
+      - windows_arm64
+
+archives:
+  - builds:
+      - igpost
+    format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: checksums.txt
