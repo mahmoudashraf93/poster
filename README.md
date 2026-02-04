@@ -19,11 +19,73 @@ make build
 
 ## Setup (Meta + Instagram)
 
-1. Create a Meta app in the Meta Developers dashboard and add the **Instagram Graph API** product.
-2. Link a Facebook Page to your Instagram Business/Creator account.
-3. Generate a short-lived user token with the required permissions (typically: `instagram_basic`, `instagram_content_publish`, `pages_show_list`).
-4. Exchange the short-lived token for a long-lived token using `poster token exchange`.
-5. Use `poster account` to fetch your Instagram Business/User ID.
+### Prerequisites
+
+1. Your Instagram account must be a **Business** or **Creator** account.
+2. The Instagram account must be linked to a **Facebook Page**.
+
+### Create the Meta app
+
+1. Create a Meta app in the [Meta for Developers](https://developers.facebook.com/) dashboard (Business app type is usually the right choice for posting).
+2. Add the [Instagram Graph API](https://developers.facebook.com/docs/instagram-api/) product.
+3. Add [Facebook Login](https://developers.facebook.com/docs/facebook-login/) (required to generate User access tokens).
+4. If you plan to list pages by Business Manager, also add **Business Management**.
+
+### Roles + App Mode
+
+1. In Development Mode, only app admins/developers/testers can generate tokens.
+2. Add yourself as an app admin/developer/tester and accept the invitation.
+3. If you want to use the app with accounts that are not admins/testers, you must switch to Live Mode and complete [App Review](https://developers.facebook.com/docs/app-review/) for the required permissions.
+
+### Required permissions (scopes)
+
+Minimum for posting:
+
+- `instagram_basic`
+- `instagram_content_publish`
+- `pages_show_list`
+
+Common extras (depending on what you call):
+
+- `pages_read_engagement` (often required to read Page details that link to Instagram)
+- `business_management` (required for `poster owned-pages` and Business Manager page discovery)
+
+### Get a short‑lived user token (Graph API Explorer)
+
+1. Open **Tools →** [Graph API Explorer](https://developers.facebook.com/tools/explorer/) in the Meta Developers dashboard.
+2. Select your app from the app dropdown.
+3. Click **Get Token → Get User Access Token**.
+4. Check the permissions you need (see list above), then authorize.
+5. Copy the generated **short‑lived** token.
+6. (Optional) Use [Access Token Debugger](https://developers.facebook.com/tools/debug/accesstoken/) to confirm the granted scopes.
+
+### Exchange for a long‑lived token
+
+```bash
+poster token exchange --short-token "<short_token>"
+```
+
+### Fetch IDs used by the CLI
+
+1. Get `IG_PAGE_ID` (from Page settings or `poster owned-pages`).
+2. Run:
+
+```bash
+poster --page-id <PAGE_ID> account
+```
+
+3. It prints `IG_USER_ID=...` for your Instagram Business/Creator account.
+
+### Business Manager notes
+
+1. If the Page is owned by a Business Manager, grab the Business ID from [Business Settings](https://business.facebook.com/settings/) → Business Info.
+2. Set `IG_BUSINESS_ID` and use:
+
+```bash
+poster owned-pages --business-id <BUSINESS_ID>
+```
+
+3. Ensure your app has the `business_management` permission and your user has admin rights on the Business and Page.
 
 ## Usage
 
@@ -159,7 +221,7 @@ Set these in `.env` (see `.env.example`) or export them in your shell.
 
 Long-lived tokens expire. When yours is near expiry:
 
-1. Generate a new short-lived token in the Meta dashboard.
+1. Generate a new short-lived token via **Tools → Graph API Explorer**.
 2. Run:
 
 ```bash
